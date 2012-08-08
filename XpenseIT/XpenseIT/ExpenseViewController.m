@@ -7,6 +7,7 @@
 //
 
 #import "ExpenseViewController.h"
+#import "ExpenseViewDetail.h"
 #import "DataHelper.h"
 #import "Expense.h"
 
@@ -75,7 +76,8 @@
     NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"MM-dd-yy"];
     cell.textLabel.text = [dateFormat stringFromDate:[currentCell date]];
-    cell.detailTextLabel.text = [currentCell desc];
+    cell.textLabel.text = @"1/1/2000 - placeholder";
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", currentCell.cost];
     
     //  If a picture exists then use it
     if ([currentCell picture])
@@ -141,6 +143,26 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+//  When add is pressed or a table row is selected
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    //  Get a reference to our detail view
+    ExpenseViewDetail *pld = (ExpenseViewDetail *)[segue destinationViewController];
+    
+    //  Pass the managed object context to the destination view controller
+    pld.managedObjectContext = managedObjectContext;
+    
+    //  If we are editing a picture we need to pass some stuff, so check the segue title first
+    if ([[segue identifier] isEqualToString:@"EditPicture"])
+    {
+        //  Get the row we selected to view
+        NSInteger selectedIndex = [[self.tableView indexPathForSelectedRow] row];
+        
+        //  Pass the picture object from the table that we want to view
+        pld.currentExpense = [expenseListData objectAtIndex:selectedIndex];
+    }
 }
 
 /*** OLD STUFF

@@ -30,6 +30,7 @@
 		B5D0113A15C26BC500114F22 /* ConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D0113915C26BC400114F22 /* ConfigViewController.m */; };
 		B5D0114115C3CE2300114F22 /* ExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D0114015C3CE2300114F22 /* ExpenseViewController.m */; };
 		B5D0114615C3D78A00114F22 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D0114515C3D78A00114F22 /* MenuViewController.m */; };
+		B5D0114915D1CFE800114F22 /* ExpenseViewDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D0114815D1CFE800114F22 /* ExpenseViewDetail.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		B5D0114015C3CE2300114F22 /* ExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseViewController.m; sourceTree = "<group>"; };
 		B5D0114415C3D78A00114F22 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		B5D0114515C3D78A00114F22 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		B5D0114715D1CFE800114F22 /* ExpenseViewDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseViewDetail.h; sourceTree = "<group>"; };
+		B5D0114815D1CFE800114F22 /* ExpenseViewDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseViewDetail.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +210,8 @@
 				B5D0114015C3CE2300114F22 /* ExpenseViewController.m */,
 				B5D0114415C3D78A00114F22 /* MenuViewController.h */,
 				B5D0114515C3D78A00114F22 /* MenuViewController.m */,
+				B5D0114715D1CFE800114F22 /* ExpenseViewDetail.h */,
+				B5D0114815D1CFE800114F22 /* ExpenseViewDetail.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 				B5D0113A15C26BC500114F22 /* ConfigViewController.m in Sources */,
 				B5D0114115C3CE2300114F22 /* ExpenseViewController.m in Sources */,
 				B5D0114615C3D78A00114F22 /* MenuViewController.m in Sources */,
+				B5D0114915D1CFE800114F22 /* ExpenseViewDetail.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +429,7 @@
 				GCC_PREFIX_HEADER = "XpenseIT/XpenseIT-Prefix.pch";
 				INFOPLIST_FILE = "XpenseIT/XpenseIT-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -434,6 +441,7 @@
 				GCC_PREFIX_HEADER = "XpenseIT/XpenseIT-Prefix.pch";
 				INFOPLIST_FILE = "XpenseIT/XpenseIT-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
