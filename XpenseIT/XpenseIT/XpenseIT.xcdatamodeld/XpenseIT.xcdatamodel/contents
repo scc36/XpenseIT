@@ -10,38 +10,43 @@
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subscription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="config" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Config" inverseName="company" inverseEntity="Config" syncable="YES"/>
     </entity>
     <entity name="Config" representedClassName="Config" syncable="YES">
-        <attribute name="business_miles" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="business_miles" optional="YES" attributeType="Decimal" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="department" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" syncable="YES"/>
-        <relationship name="current_trip" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" syncable="YES"/>
+        <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="config" inverseEntity="Company" syncable="YES"/>
+        <relationship name="current_trip" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Trip" inverseName="selected" inverseEntity="Trip" syncable="YES"/>
+        <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Expense" inverseName="owner" inverseEntity="Expense" syncable="YES"/>
+        <relationship name="trips" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Trip" inverseName="owner" inverseEntity="Trip" syncable="YES"/>
     </entity>
     <entity name="Expense" representedClassName="Expense" syncable="YES">
-        <attribute name="cost" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="cost" attributeType="Decimal" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="date" attributeType="Date" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="qty" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="qty" optional="YES" attributeType="Decimal" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rate" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="config" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Config" syncable="YES"/>
-        <relationship name="trip" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" syncable="YES"/>
+        <relationship name="owner" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Config" inverseName="expenses" inverseEntity="Config" syncable="YES"/>
+        <relationship name="trip" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="expenses" inverseEntity="Trip" syncable="YES"/>
     </entity>
     <entity name="Trip" representedClassName="Trip" syncable="YES">
-        <attribute name="date_end" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date_end" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="date_start" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="config" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Config" syncable="YES"/>
+        <attribute name="desc" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="expenses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Expense" inverseName="trip" inverseEntity="Expense" syncable="YES"/>
+        <relationship name="owner" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Config" inverseName="trips" inverseEntity="Config" syncable="YES"/>
+        <relationship name="selected" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Config" inverseName="current_trip" inverseEntity="Config" syncable="YES"/>
     </entity>
     <elements>
         <element name="Company" positionX="-126" positionY="81" width="128" height="180"/>
-        <element name="Config" positionX="-83" positionY="297" width="128" height="150"/>
+        <element name="Config" positionX="-83" positionY="297" width="128" height="195"/>
         <element name="Expense" positionX="160" positionY="99" width="128" height="165"/>
-        <element name="Trip" positionX="153" positionY="384" width="128" height="120"/>
+        <element name="Trip" positionX="153" positionY="384" width="128" height="150"/>
     </elements>
 </model>

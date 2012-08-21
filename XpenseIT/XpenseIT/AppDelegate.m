@@ -10,6 +10,9 @@
 #import "MenuViewController.h"
 #import "ConfigViewController.h"
 #import "ExpenseViewController.h"
+#import "ExpenseViewDetail.h"
+#import "TripViewController.h"
+#import "TripViewDetail.h"
 
 //TEMPORARY##
 //http://maybelost.com/2011/12/tutorial-storyboard-app-with-core-data/
@@ -43,9 +46,9 @@
     if ([prefs boolForKey:@"hasInitialized"] != YES)
     {
         // Temporary default configuration setup in Core Data
-        Config *config = (Config *)[NSEntityDescription insertNewObjectForEntityForName:@"Config" inManagedObjectContext:self.managedObjectContext];
-        [config setUser:@"auser"];
-        [config setName:@"Test User"];
+        //Config *config = (Config *)[NSEntityDescription insertNewObjectForEntityForName:@"Config" inManagedObjectContext:self.managedObjectContext];
+        //[config setUser:@"auser"];
+        //[config setName:@"Test User"];
         
         // Commit to core data
         NSError *error;

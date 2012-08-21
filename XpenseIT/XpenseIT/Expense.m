@@ -2,7 +2,7 @@
 //  Expense.m
 //  XpenseIT
 //
-//  Created by briansj on 7/26/12.
+//  Created by briansj on 8/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -13,13 +13,13 @@
 
 @implementation Expense
 
-@dynamic date;
-@dynamic rate;
-@dynamic qty;
 @dynamic cost;
-@dynamic picture;
+@dynamic date;
 @dynamic desc;
+@dynamic picture;
+@dynamic qty;
+@dynamic rate;
+@dynamic owner;
 @dynamic trip;
-@dynamic config;
 
 @end

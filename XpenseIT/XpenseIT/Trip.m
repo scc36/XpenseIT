@@ -2,19 +2,23 @@
 //  Trip.m
 //  XpenseIT
 //
-//  Created by briansj on 7/26/12.
+//  Created by briansj on 8/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Trip.h"
+#import "Config.h"
+#import "Expense.h"
 
 
 @implementation Trip
 
-@dynamic desc;
-@dynamic date_start;
 @dynamic date_end;
+@dynamic date_start;
+@dynamic desc;
 @dynamic title;
-@dynamic config;
+@dynamic expenses;
+@dynamic owner;
+@dynamic selected;
 
 @end

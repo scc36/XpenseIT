@@ -47,24 +47,19 @@
         self.currentExpense = (Expense *)[NSEntityDescription insertNewObjectForEntityForName:@"Expense" inManagedObjectContext:self.managedObjectContext];
     
     // For both new and existing pictures, fill in the details from the form
-    //[dateF setDate:[currentExpense date]];
-    [rateF setText:[NSString stringWithFormat:@"%d", currentExpense.rate]];
-    [qtyF setText:[NSString stringWithFormat:@"%d", currentExpense.qty]];
-    [costF setText:[NSString stringWithFormat:@"%d", currentExpense.cost]];
-    [descF setText:[currentExpense desc]];
-    
-    //[self.currentExpense setDate:[dateF date]];
-    
+    [self.currentExpense setDate:[dateF date]];
 //consider replacing with NSDecimal CPDecimalFromString    
     [self.currentExpense setRate:[NSDecimalNumber decimalNumberWithString: rateF.text]];
     [self.currentExpense setQty:[NSDecimalNumber decimalNumberWithString: qtyF.text]];
     [self.currentExpense setCost:[NSDecimalNumber decimalNumberWithString: costF.text]];
     [self.currentExpense setDesc:[descF text]];
     
+    NSLog(@"saved");
+    
     if (pictureF.image)
     {
         // Resize and save a smaller version for the table
-        float resize = 74.0;
+        float resize = 100.0;
         float actualWidth = pictureF.image.size.width;
         float actualHeight = pictureF.image.size.height;
         float divBy, newWidth, newHeight;
@@ -97,23 +92,22 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//  Pick an image from album
-- (IBAction)imageFromAlbum:(id)sender
-{
-    imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    [self presentViewController:imagePicker animated:YES completion:nil];
-}
-
 //  Take an image with camera
 - (IBAction)imageFromCamera:(id)sender
 {
     imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        //imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    }
+    else
+    {
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }
+    [imagePicker setDelegate:self];
     [self presentViewController:imagePicker animated:YES completion:nil];
+    //[self presentModalViewController:imagePicker animated:YES];
 }
 
 //  Resign the keyboard after Done is pressed when editing text fields

@@ -2,12 +2,13 @@
 //  Config.m
 //  XpenseIT
 //
-//  Created by briansj on 7/27/12.
+//  Created by briansj on 8/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Config.h"
 #import "Company.h"
+#import "Expense.h"
 #import "Trip.h"
 
 
@@ -19,7 +20,9 @@
 @dynamic phone;
 @dynamic title;
 @dynamic user;
-@dynamic company;
 @dynamic current_trip;
+@dynamic trips;
+@dynamic expenses;
+@dynamic company;
 
 @end

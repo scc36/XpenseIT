@@ -1,23 +1,23 @@
 //
-//  ExpenseViewController.m
+//  TripViewController.m
 //  XpenseIT
 //
-//  Created by briansj on 7/28/12.
+//  Created by briansj on 8/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "ExpenseViewController.h"
-#import "ExpenseViewDetail.h"
+#import "TripViewController.h"
+#import "TripViewDetail.h"
 #import "DataHelper.h"
-#import "Expense.h"
+#import "Trip.h"
 
-@interface ExpenseViewController ()
+@interface TripViewController ()
 
 @end
 
-@implementation ExpenseViewController
+@implementation TripViewController
 
-@synthesize managedObjectContext, expenseListData;
+@synthesize managedObjectContext, tripListData;
 
 //  When the view reappears, read new data for table
 - (void)viewWillAppear:(BOOL)animated
@@ -30,7 +30,7 @@
 - (void)readDataForTable
 {
     //  Grab the data
-    expenseListData = [DataHelper getObjectsForEntity:@"Expense" withSortKey:@"date" andSortAscending:YES andContext:managedObjectContext];
+    tripListData = [DataHelper getObjectsForEntity:@"Trip" withSortKey:@"date_start" andSortAscending:YES andContext:managedObjectContext];
     
     //  Force table refresh
     [self.tableView reloadData];
@@ -55,13 +55,13 @@
 //  Return the number of rows in the section (the amount of items in our array)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [expenseListData count];
+    return [tripListData count];
 }
 
 //  Create / reuse a table cell and configure it for display
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"TripCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -69,21 +69,14 @@
     }
     
     // Get the core data object we need to use to populate this table cell
-    Expense *currentCell = [expenseListData objectAtIndex:indexPath.row];
+    Trip *currentCell = [tripListData objectAtIndex:indexPath.row];
     
     //  Fill in the cell contents
     // Convert date to string
     NSDateFormatter* dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"MM-dd-yy"];
-    cell.textLabel.text = [dateFormat stringFromDate:[currentCell date]];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", currentCell.cost];
-    
-    //  If a picture exists then use it
-    if ([currentCell picture])
-    {
-        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        cell.imageView.image = [UIImage imageWithData:[currentCell picture]];
-    }
+    cell.textLabel.text = [dateFormat stringFromDate:[currentCell date_start]];
+    cell.detailTextLabel.text = currentCell.title;
     
     return cell;
 }
@@ -94,13 +87,13 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         //  Get a reference to the table item in our data array
-        Expense *itemToDelete = [self.expenseListData objectAtIndex:indexPath.row];
+        Trip *itemToDelete = [self.tripListData objectAtIndex:indexPath.row];
         
         //  Delete the item in Core Data
         [self.managedObjectContext deleteObject:itemToDelete];
         
         //  Remove the item from our array
-        [expenseListData removeObjectAtIndex:indexPath.row];
+        [tripListData removeObjectAtIndex:indexPath.row];
         
         //  Commit the deletion in core data
         NSError *error;
@@ -148,25 +141,24 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     //  Get a reference to our detail view
-    ExpenseViewDetail *pld = (ExpenseViewDetail *)[segue destinationViewController];
+    TripViewDetail *pld = (TripViewDetail *)[segue destinationViewController];
     
     //  Pass the managed object context to the destination view controller
     pld.managedObjectContext = managedObjectContext;
     
     //  If we are editing a picture we need to pass some stuff, so check the segue title first
-    if ([[segue identifier] isEqualToString:@"EditExpense"])
+    if ([[segue identifier] isEqualToString:@"EditTrip"])
     {
         //  Get the row we selected to view
         NSInteger selectedIndex = [[self.tableView indexPathForSelectedRow] row];
         
         //  Pass the picture object from the table that we want to view
-        pld.currentExpense = [expenseListData objectAtIndex:selectedIndex];
+        pld.currentTrip = [tripListData objectAtIndex:selectedIndex];
     }
 }
 
-/*** OLD STUFF
 #pragma mark - Table view data source
-
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 #warning Potentially incomplete method implementation.
@@ -190,7 +182,7 @@
     
     return cell;
 }
-END OLD STUFF */
+*/
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

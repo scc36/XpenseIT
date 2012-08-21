@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Config.h"
 
 @interface ConfigViewController : UIViewController
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSMutableArray *configListData;
+@property (strong, nonatomic) Config *currentConfig;
+
 @property (strong, nonatomic) IBOutlet UITextField *userF;
 @property (strong, nonatomic) IBOutlet UITextField *nameF;
 @property (strong, nonatomic) IBOutlet UITextField *departmentF;

@@ -2,23 +2,25 @@
 //  Company.m
 //  XpenseIT
 //
-//  Created by briansj on 7/26/12.
+//  Created by briansj on 8/17/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Company.h"
+#import "Config.h"
 
 
 @implementation Company
 
-@dynamic name;
 @dynamic address1;
-@dynamic city;
 @dynamic address2;
-@dynamic state;
-@dynamic zip;
-@dynamic country;
 @dynamic admin;
+@dynamic city;
+@dynamic country;
+@dynamic name;
+@dynamic state;
 @dynamic subscription;
+@dynamic zip;
+@dynamic config;
 
 @end

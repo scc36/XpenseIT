@@ -8,6 +8,7 @@
 
 #import "ConfigViewController.h"
 #import "DataHelper.h"
+#import "MenuViewController.h"
 
 @interface ConfigViewController ()
 
@@ -16,14 +17,15 @@
 @implementation ConfigViewController
 
 //  Synthesize accessors
-@synthesize managedObjectContext, userF, nameF, departmentF, titleF, phoneF;
+@synthesize managedObjectContext, configListData;
+@synthesize currentConfig;
+@synthesize userF, nameF, departmentF, titleF, phoneF;
 
 // Saving configuration information
 - (IBAction)SaveInfo:(id)sender
 {
     //  Get a reference to the text field on which the done button was pressed
     UITextField *tf = (UITextField *)sender;
-    
     // Autojump logic between form fields
     //  Jump order progresses from top to bottom
     switch (tf.tag) {
@@ -76,6 +78,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    configListData = [DataHelper getObjectsForEntity:@"Config" withSortKey:@"user" andSortAscending:YES andContext:managedObjectContext];
+    if (configListData.count > 0)
+    {
+        self.currentConfig = [configListData objectAtIndex:0];
+    }
+    
+    [userF setText:[currentConfig user]];
+    [nameF setText:[currentConfig name]];
+    [departmentF setText:[currentConfig department]];
+    [titleF setText:[currentConfig title]];
+    [phoneF setText:[currentConfig phone]];
 }
 
 - (void)viewDidUnload
@@ -87,6 +100,41 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Actions
+
+- (IBAction)cancelButtonPressed:(id)sender
+{
+    // Immediately exit
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)saveButtonPressed:(id)sender
+{
+    // Store config information
+    if (!self.currentConfig)
+    {
+        self.currentConfig = (Config *)[NSEntityDescription insertNewObjectForEntityForName:@"Config" inManagedObjectContext:self.managedObjectContext];
+    }
+    [currentConfig setUser:userF.text];
+    [currentConfig setName:nameF.text];
+    [currentConfig setDepartment:departmentF.text];
+    [currentConfig setTitle:titleF.text];
+    [currentConfig setPhone:phoneF.text];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+//  When save is pressed
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [self dismissModalViewControllerAnimated:YES];
+    
+	// Get a reference to our detail view
+    MenuViewController *pld = (MenuViewController *)[segue destinationViewController];
+
+    //  Pass the managed object context to the destination view controller1
+    pld.managedObjectContext = managedObjectContext;
 }
 
 @end
